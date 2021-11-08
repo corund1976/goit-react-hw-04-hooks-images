@@ -26,8 +26,7 @@ function App() {
     setImages([]);
     setPagination(1);
     setError(null);
-    fetchImages(pagination);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    fetchImages(1);
   }, [search]);
 
   useEffect(() =>{
