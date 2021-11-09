@@ -13,10 +13,14 @@ const setParams = (searchQuery, pagePagination) =>
     per_page: 12
   });
 
-export async function getDataServer (searchQuery, pagePagination) {
+export async function getDataServer(searchQuery, pagePagination) {
   setParams(searchQuery, pagePagination);
-  return await axios
-    .get()
-    .then(response => response.data.hits)
-    .catch(error => console.log('error: ', error));
+  try {
+    const response = await axios.get();
+    return response.data.hits;
+  }
+  catch (error) {
+    console.log('error: ', error);
+    throw error;
+  }
 };

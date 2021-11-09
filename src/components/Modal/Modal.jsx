@@ -2,28 +2,26 @@ import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import s from './Modal.module.css';
 
-function Modal({ modalImage, onToggleModalStatus }) {
-    useEffect(() => {
-      window.addEventListener('keydown', handleKeyEsc);
-      return () => {
-        window.removeEventListener('keydown', handleKeyEsc);
-      };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-  
-  const handleKeyEsc = e => {
-    if (e.code === 'Escape') {           //e.keyCode === 27
-      onToggleModalStatus();
-    }
-  };
-
+function Modal({ modalImage: {largeImageURL, tags}, onToggleModalStatus }) {
   const handleClickBackdrop = e => {
     if (e.currentTarget === e.target) {
       onToggleModalStatus();
     }
   };
 
-  const { largeImageURL, tags } = modalImage;
+  useEffect(() => {
+    const handleKeyEsc = e => {
+      if (e.code === 'Escape') {           //e.keyCode === 27
+        onToggleModalStatus();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyEsc);
+    
+    return () => {
+      window.removeEventListener('keydown', handleKeyEsc);
+    };
+  }, [onToggleModalStatus]);
 
   return (
     <div className={s.Overlay} onClick={handleClickBackdrop}>
